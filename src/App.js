@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import Auth from './auth/Auth';
+import { Helmet } from "react-helmet";
+import { makeStyles } from '@material-ui/core/styles';
+import { TokenContext } from './auth/TokenContext';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const useStyles = makeStyles({
+    container: {
+        height: '100vh',
+        width: '100vw',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+
+const App = () => {
+    const { token } = useContext(TokenContext);
+    const classes = useStyles();
+
+    const content = token
+        ? <div>{token}</div>
+        : <Auth />;
+
+    return (
+        <>
+            <Helmet>
+                <title>TOKEN RECEIVED</title>
+            </Helmet>
+            <div className={classes.container}>
+                {content}
+            </div>
+        </>
+    );
+};
 
 export default App;
