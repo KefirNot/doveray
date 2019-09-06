@@ -1,36 +1,55 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Auth from './auth/Auth';
 import { Helmet } from "react-helmet";
 import { makeStyles } from '@material-ui/core/styles';
-import { TokenContext } from './auth/TokenContext';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Search from '@material-ui/icons/Search';
+import VacancyList from './vacancies/VacancyList';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     container: {
         height: '100vh',
         width: '100vw',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: 'column',
     },
-});
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
+}));
 
 const App = () => {
-    const { token } = useContext(TokenContext);
     const classes = useStyles();
 
-    const content = token
-        ? <div>{token}</div>
-        : <Auth />;
-
     return (
-        <>
+        <div className={classes.container}>
             <Helmet>
-                <title>TOKEN RECEIVED</title>
+                <title>DOVERAY.RU</title>
             </Helmet>
-            <div className={classes.container}>
-                {content}
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        DOVERAY.RU
+                    </Typography>
+                    <IconButton edge="end" color="inherit" aria-label="search">
+                        <Search />
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            <div>
+                <VacancyList />
             </div>
-        </>
+        </div>
     );
 };
 

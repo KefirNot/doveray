@@ -7,6 +7,10 @@ export const enterPhone = (phone) => axios.post(
 );
 
 export const enterCode = (phone, code) => axios.post(
-    'http://5.130.51.166:5000/api/accounts/auth',
+    `${host}/api/accounts/auth`,
     { UserName: phone, Password: code }
 );
+
+export const getVacancies = (token) => axios.post(`${host}/api/Accounts/${token ? 'GetVacAuth' : 'GetVacAnonymous'}`);
+
+
